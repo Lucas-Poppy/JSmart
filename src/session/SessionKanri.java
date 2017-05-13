@@ -5,14 +5,12 @@ import javax.servlet.http.HttpSession;
 
 public class SessionKanri {
 
-/**
- *
- * @param request
- */
-	public void sessionRemoveAll(HttpServletRequest request){
+
+	public static void sessionRemoveAll(HttpServletRequest request){
 
 		HttpSession session = request.getSession();
 		session.removeAttribute("strDepartmentSectionBeanList");
+		session.removeAttribute("strDepartmentBeanList");
 
 	}
 

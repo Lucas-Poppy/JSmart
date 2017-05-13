@@ -23,7 +23,7 @@ public class DepartmentSectionKanri {
 
 	private String departmentMaxIdSql = "select count(*) +1 from department group by dept_id";
 
-	private String departmentUpdateSql = "insert into Order_tbl values(?,sysdate,?)";
+	private String departmentUpdateSql = "insert into department (dept_id,dept_name) values(?,?)";
 
 
 
@@ -85,15 +85,25 @@ public class DepartmentSectionKanri {
 		return maxId;
 	}
 
-
+	/**
+	 * department表に新しく部署を登録するメソッド
+	 *
+	 * @param deptName 新しく登録する部署名
+	 * @return 何件新規登録されたかを返す
+	 * @throws SQLException
+	 */
 
 
 	public int deptInsert(String deptName) throws SQLException{
+		int maxId = deptMaxId();
 		Connection con=DBManager.getConnection();
 		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(departmentUpdateSql);
+		pstm.setLong(1, maxId);
+		pstm.setString(2, deptName);
+		int insertNumber = pstm.executeUpdate();
 
 
-		return 0;
+		return insertNumber;
 	}
 
 
