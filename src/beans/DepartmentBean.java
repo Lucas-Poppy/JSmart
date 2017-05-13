@@ -3,23 +3,20 @@ package beans;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DpartmentSectionBean {
-
+public class DepartmentBean {
 	private String deptId;
 	private String deptName;
-	private String sectionId;
-	private String sectionName;
 
-	public DpartmentSectionBean(ResultSet res){
+	public DepartmentBean(ResultSet res){
 		try{
 			deptId = res.getString(1);
 			deptName = res.getString(2);
-			sectionId = res.getString(3);
-			sectionName = res.getString(4);
+
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
 	}
+
 
 	/**
 	 * 部署IDを返すメソッド
@@ -51,35 +48,5 @@ public class DpartmentSectionBean {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
-
-	/**
-	 * 課IDを返すメソッド
-	 * @return 課ID
-	 */
-	public String getSectionId() {
-		return sectionId;
-	}
-	/**
-	 * 課IDをセットするメソッド
-	 * @param sectionId 課を一意に識別する番号
-	 */
-	public void setSectionId(String sectionId) {
-		this.sectionId = sectionId;
-	}
-	/**
-	 * 課名を返すメソッド
-	 * @return 課名
-	 */
-	public String getSectionName() {
-		return sectionName;
-	}
-	/**
-	 * 課名をセットするメソッド
-	 * @param sectionName 課名
-	 */
-	public void setSectionName(String sectionName) {
-		this.sectionName = sectionName;
-	}
-
 
 }

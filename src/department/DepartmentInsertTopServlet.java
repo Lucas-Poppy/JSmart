@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.DpartmentSectionBean;
+import beans.DepartmentSectionBean;
 
 /**
  * Servlet implementation class DepartmentInsertTopServlet
@@ -46,10 +46,10 @@ public class DepartmentInsertTopServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
-		List<DpartmentSectionBean> departmentSectionBeanList = new ArrayList<DpartmentSectionBean>();
+		List<DepartmentSectionBean> departmentSectionBeanList = new ArrayList<DepartmentSectionBean>();
 		DepartmentSectionKanri dsKanri = new DepartmentSectionKanri();
 		try {
-			departmentSectionBeanList = dsKanri.allSearch();
+			departmentSectionBeanList = dsKanri.allDeptSectionSearch();
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			System.out.println(e);
