@@ -95,7 +95,7 @@ public class DepartmentInsertTopServlet extends HttpServlet {
 
 		StringBuilder sb2 = new StringBuilder(300);
 		for (int i = 0; i < departmentBeanList.size(); i++) {
-			sb2.append("<option value='" + departmentBeanList.get(i).getDeptId() + "'>");
+			sb2.append("<option value='" + departmentBeanList.get(i).getDeptId()+","+departmentBeanList.get(i).getDeptName()+ "'>");
 			sb2.append(departmentBeanList.get(i).getDeptName() + "</option>");
 		}
 		String strDepartmentBeanList = sb2.toString();

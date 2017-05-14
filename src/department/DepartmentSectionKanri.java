@@ -25,6 +25,18 @@ public class DepartmentSectionKanri {
 
 	private static String departmentInsertSql = "insert into department (dept_id,dept_name) values(?,?)";
 
+	private static String deptNameExsistsSql = "select * from department where dept_name = ?";
+
+	private static String sectionNameExsistsSql = "select * from department_section  join section using(section_id) where section_name = ? and dept_id=?";
+
+
+	private static String sectionMaxIdSql = "select count(*) +1 from section group by section_id";
+
+
+	private static String sectionInsertSql = "insert into section (section_id,section_name) values(?,?)";
+
+	private static String departmentSectionInsertSql = "insert into department_section (dept_id,section_id) values(?,?)";
+
 
 
 	/**
@@ -42,6 +54,9 @@ public class DepartmentSectionKanri {
 			DepartmentSectionBean bean = new DepartmentSectionBean(result);
 			departmentSectionList.add(bean);
 			}
+		result.close();
+		pstm.close();
+		con.close();
 
 		return departmentSectionList;
 	}
@@ -62,6 +77,9 @@ public class DepartmentSectionKanri {
 			DepartmentBean bean = new DepartmentBean(result);
 			departmentList.add(bean);
 			}
+		result.close();
+		pstm.close();
+		con.close();
 
 		return departmentList;
 	}
@@ -81,6 +99,9 @@ public class DepartmentSectionKanri {
 		if(result.next()){
 			maxId=result.getInt(1);
 		}
+		result.close();
+		pstm.close();
+		con.close();
 
 		return maxId;
 	}
@@ -102,9 +123,115 @@ public class DepartmentSectionKanri {
 		pstm.setString(2, deptName);
 		int insertNumber = pstm.executeUpdate();
 
+		pstm.close();
+		con.close();
 
 		return insertNumber;
 	}
+
+	/**
+	 * 部署名が既に存在しているかどうか確かめるメソッド
+	 *
+	 * @param deptName 部署名
+	 * @return 存在するならfalse 存在しないならtrue
+	 * @throws SQLException
+	 */
+
+	public static boolean deptNameExsists(String deptName) throws SQLException{
+		Connection con=DBManager.getConnection();
+		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(deptNameExsistsSql);
+		pstm.setString(1, deptName);
+		ResultSet result = pstm.executeQuery();
+
+		boolean bool = !result.next();
+		result.close();
+		pstm.close();
+		con.close();
+
+		return bool;
+
+	}
+
+
+
+
+	/**
+	 * section表の件数を+1して返すメソッド
+	 * @return 件数+1
+	 * @throws SQLException
+	 */
+	public static int sectionMaxId() throws SQLException{
+		int maxId = 1;
+		Connection con=DBManager.getConnection();
+		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(sectionMaxIdSql);
+		ResultSet result = pstm.executeQuery();
+
+		if(result.next()){
+			maxId=result.getInt(1);
+		}
+
+		result.close();
+		pstm.close();
+		con.close();
+
+		return maxId;
+	}
+
+
+	/**
+	 * section表に新しく課を登録するメソッド
+	 *
+	 * @param sectionName 新しく登録する課名
+	 * @param deptId 課の属する部署ID
+	 * @throws SQLException
+	 */
+
+
+	public static void sectionInsert(String sectionName,String deptId) throws SQLException{
+		int maxId = sectionMaxId();
+		Connection con=DBManager.getConnection();
+		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(sectionInsertSql);
+		pstm.setLong(1, maxId);
+		pstm.setString(2, sectionName);
+		int insertNumber = pstm.executeUpdate();
+
+		if(insertNumber!=0){
+			PreparedStatement pstm2=(PreparedStatement) con.prepareStatement(departmentSectionInsertSql);
+			pstm2.setLong(1, maxId);
+			pstm2.setString(2, deptId);
+			pstm2.executeUpdate();
+			pstm2.close();
+		}
+		pstm.close();
+		con.close();
+	}
+
+
+	/**
+	 * その部署に課名が既に存在するか確認するメソッド
+	 * @param sectionName 課名
+	 * @param deptId 部署ID
+	 * @return 存在するならfalse 存在しないならtrue
+	 * @throws SQLException
+	 */
+
+	public static boolean sectionNameExsists(String sectionName,String deptId) throws SQLException{
+		Connection con=DBManager.getConnection();
+		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(sectionNameExsistsSql);
+		pstm.setString(1,sectionName);
+		pstm.setString(2, deptId);
+		ResultSet result = pstm.executeQuery();
+
+		boolean bool = !result.next();
+		result.close();
+		pstm.close();
+		con.close();
+		return bool;
+
+	}
+
+
+
 
 
 }
