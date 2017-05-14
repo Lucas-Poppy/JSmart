@@ -63,24 +63,32 @@ public class DepartmentInsertConfirmServlet extends HttpServlet {
 		//部署登録モードのときの処理
 		case DEPT_INSERT_MODE:
 			String deptName = request.getParameter("deptName");
+			session.setAttribute("textBoxDeptName", deptName);
+
 			boolean deptNameExsists = false;
 			try {
 				deptNameExsists = DepartmentSectionKanri.deptNameExsists(deptName);
-				if(deptNameExsists==false){
-					session.setAttribute("errorInsertDepartmentExsists", "部署名が重複しています！");
-				}
 			} catch (SQLException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
 
-			if(InputCheck.inputMaxTen(deptName)&&deptNameExsists){
-				session.setAttribute("deptName", deptName);
-				request.setAttribute("confirm", deptName+"部を新規に登録する" );
+			if(InputCheck.inputMaxTen(deptName)==false||deptNameExsists==false||InputCheck.inputEmpty(deptName)==false){
+				if(InputCheck.inputMaxTen(deptName)==false){
+					session.setAttribute("errorInsertDeptName10Word", "10文字以上は入力できません！");
+				}
+				if(deptNameExsists==false){
+					session.setAttribute("errorInsertDepartmentExsists", "部署名が重複しています！");
+				}
+				if(InputCheck.inputEmpty(deptName)==false){
+					session.setAttribute("errorInsertDepartmentEmpty", "入力してください！");
+				}
+				url="DepartmentInsertTopServlet";
+
 
 			}else{
-				session.setAttribute("errorInsertDeptName10Word", "10文字以上は入力できません！");
-				url="DepartmentInsertTopServlet";
+				session.setAttribute("deptName", deptName);
+				request.setAttribute("confirm", deptName+"部を新規に登録する" );
 			}
 
 			break;
@@ -91,31 +99,42 @@ public class DepartmentInsertConfirmServlet extends HttpServlet {
 			String deptId = dept[0];
 			String deptNameConfirm = dept[1];
 
+			session.setAttribute("textBoxSectionName", sectionName);
+			session.setAttribute("optionMenuDeptId",deptId);
+
+
 
 			boolean sectionNameExsists = false;
 			try {
 				sectionNameExsists = DepartmentSectionKanri.sectionNameExsists(sectionName,deptId);
-				if(sectionNameExsists==false){
-					session.setAttribute("errorInsertSectionExsists", "課名が重複しています！");
-				}
+
 			} catch (SQLException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
 
-			if(InputCheck.inputMaxTen(sectionName)&&sectionNameExsists){
+			if(InputCheck.inputMaxTen(sectionName)==false||sectionNameExsists==false||InputCheck.inputEmpty(sectionName)==false||deptId.equals("0")){
+
+				if(InputCheck.inputMaxTen(sectionName)==false){
+					session.setAttribute("errorInsertSectionName10Word", "10文字以上は入力できません！");
+				}
+				if(sectionNameExsists==false){
+					session.setAttribute("errorInsertSectionExsists", "課名が重複しています！");
+				}
+				if(InputCheck.inputEmpty(sectionName)==false){
+					session.setAttribute("errorInsertSectionEmpty", "入力してください！");
+				}
+				if(deptId.equals("0")){
+					session.setAttribute("errorInsertDepartmentSelected", "部署を選択してください！");
+				}
+
+				url="DepartmentInsertTopServlet";
+			}else{
 				session.setAttribute("sectionName", sectionName);
 				session.setAttribute("deptId",deptId);
 				session.setAttribute("deptName",deptNameConfirm);
 				request.setAttribute("confirm", sectionName+"課を"+deptNameConfirm+"部に新規に登録する" );
-			}else{
-				session.setAttribute("errorInsertSectionName10Word", "10文字以上は入力できません！");
-				url="DepartmentInsertTopServlet";
-			}
 
-			if(deptId.equals("0")){
-				session.setAttribute("errorInsertDepartmentSelected", "部署を選択してください！");
-				url="DepartmentInsertTopServlet";
 			}
 
 			break;

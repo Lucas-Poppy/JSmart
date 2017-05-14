@@ -18,11 +18,11 @@ public class SessionKanri {
 		session.removeAttribute("errorInsertDepartmentSelected");
 		session.removeAttribute("errorInsertDepartmentExsists");
 		session.removeAttribute("errorInsertSectionExsists");
-		session.removeAttribute("");
-		session.removeAttribute("");
-		session.removeAttribute("");
-		session.removeAttribute("");
-		session.removeAttribute("");
+		session.removeAttribute("errorInsertSectionEmpty");
+		session.removeAttribute("errorInsertDepartmentEmpty");
+		session.removeAttribute("deptInsertResult");
+		session.removeAttribute("textBoxDeptName");
+		session.removeAttribute("textBoxSectionName");
 		session.removeAttribute("");
 		session.removeAttribute("");
 		session.removeAttribute("");

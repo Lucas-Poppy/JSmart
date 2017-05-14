@@ -50,6 +50,8 @@ public class DepartmentInsertTopServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
+		String deptId =(String) session.getAttribute("optionMenuDeptId");
+
 		/**
 		 * 部署と課の一覧の作成
 		 */
@@ -94,8 +96,14 @@ public class DepartmentInsertTopServlet extends HttpServlet {
 		}
 
 		StringBuilder sb2 = new StringBuilder(300);
+		String selected;
 		for (int i = 0; i < departmentBeanList.size(); i++) {
-			sb2.append("<option value='" + departmentBeanList.get(i).getDeptId()+","+departmentBeanList.get(i).getDeptName()+ "'>");
+			if(deptId.equals(departmentBeanList.get(i).getDeptId())){
+				selected="selected";
+			}else{
+				selected="";
+			}
+			sb2.append("<option value='" + departmentBeanList.get(i).getDeptId()+","+departmentBeanList.get(i).getDeptName()+ "'"+selected+">");
 			sb2.append(departmentBeanList.get(i).getDeptName() + "</option>");
 		}
 		String strDepartmentBeanList = sb2.toString();

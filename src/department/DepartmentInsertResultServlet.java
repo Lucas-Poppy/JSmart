@@ -3,6 +3,7 @@ package department;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -81,6 +82,9 @@ public class DepartmentInsertResultServlet extends HttpServlet {
 
 				break;
 		}
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("department/departmentInsertResult.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

@@ -9,7 +9,7 @@
 <body>
 	<%
 	request.setCharacterEncoding("UTF-8");
-	String result = (String)request.getAttribute("deptInsertResult");
+	String result = (String)session.getAttribute("deptInsertResult");
 
 	%>
 	<h2>完了画面</h2>

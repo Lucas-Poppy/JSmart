@@ -11,7 +11,7 @@ public class IntegerCheck {
 	 * @param s 任意の文字列
 	 * @return 変換可能もしくは空白ならtrue 変換不可能の場合はfalseを返す
 	 */
-	public boolean checkParseInt(String s) {
+	public static boolean checkParseInt(String s) {
 
 		if (s.equals("")) {
 			return true;
@@ -32,7 +32,7 @@ public class IntegerCheck {
 	 * @param s
 	 * @return 空白の場合、もしくは変換不可能であった場合は0 それ以外は変換後の数値を返す
 	 */
-	public int convertInteger(String s) {
+	public static int convertInteger(String s) {
 
 		if (s.equals("")) {
 			return 0;

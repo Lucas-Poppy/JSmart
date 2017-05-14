@@ -21,7 +21,7 @@ public class DepartmentSectionKanri {
 
 	private String departmentAllSql = "select * from department order by dept_id";
 
-	private static String departmentMaxIdSql = "select count(*) +1 from department group by dept_id";
+	private static String departmentMaxIdSql = "select count(*) +1 from department";
 
 	private static String departmentInsertSql = "insert into department (dept_id,dept_name) values(?,?)";
 
@@ -30,7 +30,7 @@ public class DepartmentSectionKanri {
 	private static String sectionNameExsistsSql = "select * from department_section  join section using(section_id) where section_name = ? and dept_id=?";
 
 
-	private static String sectionMaxIdSql = "select count(*) +1 from section group by section_id";
+	private static String sectionMaxIdSql = "select count(*) +1 from section";
 
 
 	private static String sectionInsertSql = "insert into section (section_id,section_name) values(?,?)";
@@ -98,6 +98,7 @@ public class DepartmentSectionKanri {
 
 		if(result.next()){
 			maxId=result.getInt(1);
+			System.out.println(maxId);
 		}
 		result.close();
 		pstm.close();
@@ -197,8 +198,8 @@ public class DepartmentSectionKanri {
 
 		if(insertNumber!=0){
 			PreparedStatement pstm2=(PreparedStatement) con.prepareStatement(departmentSectionInsertSql);
-			pstm2.setLong(1, maxId);
-			pstm2.setString(2, deptId);
+			pstm2.setString(1, deptId);
+			pstm2.setLong(2, maxId);
 			pstm2.executeUpdate();
 			pstm2.close();
 		}
