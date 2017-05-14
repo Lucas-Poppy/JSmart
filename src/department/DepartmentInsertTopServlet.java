@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import beans.DepartmentBean;
 import beans.DepartmentSectionBean;
+import benefit.NullCheck;
 
 /**
  * Servlet implementation class DepartmentInsertTopServlet
@@ -62,9 +63,16 @@ public class DepartmentInsertTopServlet extends HttpServlet {
 		}
 
 		StringBuilder sb = new StringBuilder(300);
+		String ka = "課";
 		for (int i = 0; i < departmentSectionBeanList.size(); i++) {
-			sb.append("<tr><td>" + departmentSectionBeanList.get(i).getDeptName() + "</td>");
-			sb.append("<td>" + departmentSectionBeanList.get(i).getSectionName() + "</td></tr>");
+
+			if(departmentSectionBeanList.get(i).getSectionName()==null){
+				ka="";
+			}else{
+				ka="課";
+			}
+			sb.append("<tr><td>" + departmentSectionBeanList.get(i).getDeptName() + "部</td>");
+			sb.append("<td>" + NullCheck.nullConvert(departmentSectionBeanList.get(i).getSectionName()) +ka+ "</td></tr>");
 		}
 		String strDepartmentSectionBeanList = sb.toString();
 
@@ -90,7 +98,7 @@ public class DepartmentInsertTopServlet extends HttpServlet {
 			sb2.append("<option value='" + departmentBeanList.get(i).getDeptId() + "'>");
 			sb2.append(departmentBeanList.get(i).getDeptName() + "</option>");
 		}
-		String strDepartmentBeanList = sb.toString();
+		String strDepartmentBeanList = sb2.toString();
 
 		session.setAttribute("strDepartmentBeanList", strDepartmentBeanList);
 

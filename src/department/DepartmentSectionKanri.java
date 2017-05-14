@@ -17,13 +17,13 @@ public class DepartmentSectionKanri {
 	/**
 	 *
 	 */
-	private String departmentSectionAllSql = "select * from department d left join department_section d_s using(dept_id) left join section s using(section_id) order by dept_id,section_id";
+	private String departmentSectionAllSql = "select dept_id,dept_name,section_id,section_name from department d left join department_section d_s using(dept_id) left join section s using(section_id) order by dept_id,section_id";
 
 	private String departmentAllSql = "select * from department order by dept_id";
 
-	private String departmentMaxIdSql = "select count(*) +1 from department group by dept_id";
+	private static String departmentMaxIdSql = "select count(*) +1 from department group by dept_id";
 
-	private String departmentUpdateSql = "insert into department (dept_id,dept_name) values(?,?)";
+	private static String departmentInsertSql = "insert into department (dept_id,dept_name) values(?,?)";
 
 
 
@@ -72,7 +72,7 @@ public class DepartmentSectionKanri {
 	 * @return 件数+1
 	 * @throws SQLException
 	 */
-	public int deptMaxId() throws SQLException{
+	public static int deptMaxId() throws SQLException{
 		int maxId = 1;
 		Connection con=DBManager.getConnection();
 		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(departmentMaxIdSql);
@@ -94,10 +94,10 @@ public class DepartmentSectionKanri {
 	 */
 
 
-	public int deptInsert(String deptName) throws SQLException{
+	public static int deptInsert(String deptName) throws SQLException{
 		int maxId = deptMaxId();
 		Connection con=DBManager.getConnection();
-		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(departmentUpdateSql);
+		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(departmentInsertSql);
 		pstm.setLong(1, maxId);
 		pstm.setString(2, deptName);
 		int insertNumber = pstm.executeUpdate();
