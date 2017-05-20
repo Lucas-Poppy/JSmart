@@ -50,7 +50,7 @@ public class DepartmentInsertTopServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
-		String deptId =(String) session.getAttribute("optionMenuDeptId");
+		String deptId =NullCheck.nullConvert((String) session.getAttribute("optionMenuDeptId"));
 
 		/**
 		 * 部署と課の一覧の作成
