@@ -3,19 +3,17 @@ package position;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-
-import beans.PositionBean;
 
 import com.mysql.jdbc.PreparedStatement;
 
+import beans.PositionBean;
 import dbconnect.DBManager;
 
 public class PositionKanri {
 
-	private static String positionMaxIdSql = "select count(*) +1 from position";
 
-	private static String positionUpdateSql = "update position set position_name=?,position_allowance=? where position_id=?";
 
 
 
@@ -26,6 +24,7 @@ public class PositionKanri {
 	 * @throws SQLException
 	 */
 	public static int positionMaxId() throws SQLException {
+		String positionMaxIdSql = "select count(*) +1 from position";
 		int maxId = 1;
 		Connection con = DBManager.getConnection();
 		PreparedStatement pstm = (PreparedStatement) con
@@ -44,15 +43,16 @@ public class PositionKanri {
 	}
 
 	/**
+	 *新しく役職を登録するメソッド
 	 *
-	 * @param positionName
-	 * @param positionLank
-	 * @param position_allowance
+	 * @param positionName　役職名
+	 * @param positionLank　役職ランク
+	 * @param position_allowance　役職手当
 	 * @return
 	 * @throws SQLException
 	 */
 
-	public static int positionInsert(String positionName, int positionLank,
+	public static void positionInsert(String positionName, int positionLank,
 			String position_allowance) throws SQLException {
 
 
@@ -66,20 +66,20 @@ public class PositionKanri {
 		pstm.setString(2, positionName);
 		pstm.setInt(3, positionLank);
 		pstm.setString(4, position_allowance);
-		int insertNumber = pstm.executeUpdate();
+		pstm.executeUpdate();
 
 		pstm.close();
 		con.close();
 
-		return insertNumber;
 	}
 /**
+ *	入力された役職ランクよりも下にすでに役職がある場合に下の役職ランクを1つ繰り下げるメソッド
  *
- * @param positionLank
+ * @param positionLank　役職ランク
  * @throws SQLException
  */
 	public static void  positionDown(int positionLank) throws SQLException{
-		String positionLankImpactUpdateSql = "update position set position_lank = position_lank + 1 where position_lank <= ? ";
+		String positionLankImpactUpdateSql = "update position set position_lank = position_lank + 1 where position_lank >= ? ";
 
 		Connection con = DBManager.getConnection();
 		PreparedStatement pstm = (PreparedStatement) con.prepareStatement(positionLankImpactUpdateSql);
@@ -94,7 +94,7 @@ public class PositionKanri {
 
 	/**
 	 * ランクを入れ替えるメソッド
-	 * @param positionId
+	 * @param positionId　役職を一意に識別するID
 	 * @param changeMethod 指定された役職の役職ランクを下げるか上げるかを判断する文字列 "UP"or"DOWM"
 	 * @throws SQLException
 	 */
@@ -126,6 +126,9 @@ public class PositionKanri {
 				pstmLankDown.setInt(1,upPositionId);
 				break;
 		}
+		pstmLankUp.executeUpdate();
+		pstmLankDown.executeUpdate();
+
 
 
 		pstmLankUp.close();
@@ -173,7 +176,7 @@ public class PositionKanri {
 		int PositionLank = 0;
 
 		if(result.next()){
-			PositionLank = result.getInt(3);
+			PositionLank = result.getInt(1);
 		}
 
 		return PositionLank;
@@ -181,11 +184,70 @@ public class PositionKanri {
 
 	}
 
+/**
+ *
+ *
+ * @return
+ * @throws SQLException
+ */
+	public List<PositionBean> getAllPosition() throws SQLException{
+		String getAllPositionSql = "select position_id,position_name,position_lank,position_allowance from position order by 3";
+			Connection con=DBManager.getConnection();
+			PreparedStatement pstm=(PreparedStatement) con.prepareStatement(getAllPositionSql) ;
+			ResultSet result = pstm.executeQuery();
+			List<PositionBean> positionList = new ArrayList<PositionBean>();
+			while(result.next()){
+				PositionBean bean = new PositionBean(result);
+				positionList.add(bean);
+				}
+			result.close();
+			pstm.close();
+			con.close();
 
-	public List<PositionBean> allPosition() throws SQLException{
+			return positionList;
+	}
+
+/**
+ * 入力された役職名が存在するかどうか確認するメソッド
+ * @param positionName 役職名
+ * @return 存在すればtrueを存在しなければfalseを返す
+ */
+	public static boolean positionExsists(String positionName) throws SQLException{
+		String positionExsistsSql ="select * from position where position_name = ?";
+		Connection con=DBManager.getConnection();
+		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(positionExsistsSql) ;
+		pstm.setString(1, positionName);
+		ResultSet result = pstm.executeQuery();
+
+		boolean exsists = false;
+
+		if(result.next()){
+			exsists=true;
+		}
+		result.close();
+		pstm.close();
+		con.close();
+
+		return exsists;
 
 	}
 
+
+
+
+	public static void positionUpdate(String positionName,int positionAllowance,int positionId) throws SQLException{
+		String positionUpdateSql = "update position set position_name=?,position_allowance=? where position_id=?";
+		Connection con=DBManager.getConnection();
+		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(positionUpdateSql) ;
+		pstm.setString(1, positionName);
+		pstm.setInt(2, positionAllowance);
+		pstm.setInt(3, positionId);
+
+		pstm.executeUpdate();
+		pstm.close();
+		con.close();
+
+	}
 
 
 }

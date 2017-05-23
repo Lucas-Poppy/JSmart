@@ -18,6 +18,8 @@ import beans.DepartmentSectionBean;
 import benefit.NullCheck;
 
 /**
+ * 部署課登録の画面を生成するサーブレットクラス
+ *
  * Servlet implementation class DepartmentInsertTopServlet
  */
 @WebServlet("/DepartmentInsertTopServlet")
@@ -107,12 +109,15 @@ public class DepartmentInsertTopServlet extends HttpServlet {
 			sb2.append(departmentBeanList.get(i).getDeptName() + "</option>");
 		}
 		String strDepartmentBeanList = sb2.toString();
+		/**
+		 * 部のoptionメニューを作成の終了
+		 */
 
 		session.setAttribute("strDepartmentBeanList", strDepartmentBeanList);
 
 
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("department/departmentInsert.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("department/department_insert.jsp");
 		dispatcher.forward(request, response);
 
 	}

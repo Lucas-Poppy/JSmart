@@ -15,6 +15,8 @@ import benefit.InputCheck;
 import benefit.NullCheck;
 
 /**
+ * 部署登録もしくは課登録をするサーブレットクラス
+ *
  * Servlet implementation class DepartmentInsertConfirmServlet
  */
 @WebServlet("/DepartmentInsertConfirmServlet")
@@ -50,11 +52,14 @@ public class DepartmentInsertConfirmServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 			IOException {
-		// TODO Auto-generated method stub
+
+		// 部署登録もしくは課登録をするときのメソッド
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		String url = "department/departmentInsertConfirm.jsp";
+		//送り先のurl
+		String url = "department/department_insert_confirm.jsp";
 
+		//部署登録モードか課登録モード化を受け取る
 		String insertMode = request.getParameter("submitMethod");
 
 		session.setAttribute("insertMode",insertMode);
@@ -66,6 +71,7 @@ public class DepartmentInsertConfirmServlet extends HttpServlet {
 			session.setAttribute("textBoxDeptName", deptName);
 
 			boolean deptNameExsists = false;
+			//入力された部署名が重複しているかを確認する
 			try {
 				deptNameExsists = DepartmentSectionKanri.deptNameExsists(deptName);
 			} catch (SQLException e) {
@@ -73,14 +79,15 @@ public class DepartmentInsertConfirmServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			if(InputCheck.inputMaxTen(deptName)==false||deptNameExsists==false||InputCheck.inputEmpty(deptName)==false){
-				if(InputCheck.inputMaxTen(deptName)==false){
+			//入力チェック
+			if(!InputCheck.inputMaxTen(deptName)||!deptNameExsists||!InputCheck.inputEmpty(deptName)){
+				if(!InputCheck.inputMaxTen(deptName)){
 					session.setAttribute("errorInsertDeptName10Word", "10文字以上は入力できません！");
 				}
-				if(deptNameExsists==false){
+				if(!deptNameExsists){
 					session.setAttribute("errorInsertDepartmentExsists", "部署名が重複しています！");
 				}
-				if(InputCheck.inputEmpty(deptName)==false){
+				if(!InputCheck.inputEmpty(deptName)){
 					session.setAttribute("errorInsertDepartmentEmpty", "入力してください！");
 				}
 				url="DepartmentInsertTopServlet";
@@ -105,23 +112,24 @@ public class DepartmentInsertConfirmServlet extends HttpServlet {
 
 
 			boolean sectionNameExsists = false;
+
+			//入力された課が重複しているかどうかを確認する
 			try {
 				sectionNameExsists = DepartmentSectionKanri.sectionNameExsists(sectionName,deptId);
-
 			} catch (SQLException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
+			//入力チェック
+			if(!InputCheck.inputMaxTen(sectionName)||!sectionNameExsists||!InputCheck.inputEmpty(sectionName)||deptId.equals("0")){
 
-			if(InputCheck.inputMaxTen(sectionName)==false||sectionNameExsists==false||InputCheck.inputEmpty(sectionName)==false||deptId.equals("0")){
-
-				if(InputCheck.inputMaxTen(sectionName)==false){
+				if(!InputCheck.inputMaxTen(sectionName)){
 					session.setAttribute("errorInsertSectionName10Word", "10文字以上は入力できません！");
 				}
-				if(sectionNameExsists==false){
+				if(!sectionNameExsists){
 					session.setAttribute("errorInsertSectionExsists", "課名が重複しています！");
 				}
-				if(InputCheck.inputEmpty(sectionName)==false){
+				if(!InputCheck.inputEmpty(sectionName)){
 					session.setAttribute("errorInsertSectionEmpty", "入力してください！");
 				}
 				if(deptId.equals("0")){

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * 部署もしくは課の登録の結果を表示するサーブレットクラス
+ *
  * Servlet implementation class DepartmentInsertResultServlet
  */
 @WebServlet("/DepartmentInsertResultServlet")
@@ -51,11 +53,17 @@ public class DepartmentInsertResultServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
+		/**
+		 * 登録モードを受け取る
+		 */
 		String insertMode = (String)session.getAttribute("insertMode");
+		/**
+		 * 登録先の部署名を受け取る
+		 */
 		String deptName = (String)session.getAttribute("deptName");
 
 		switch(insertMode){
-
+			//部署登録モードの時の処理
 			case DEPT_INSERT_MODE:
 				try {
 					DepartmentSectionKanri.deptInsert(deptName);
@@ -65,9 +73,8 @@ public class DepartmentInsertResultServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 
-
-
 				break;
+			//課登録モードのときの処理
 			case SECTION_INSERT_MODE:
 				String sectionName =(String)session.getAttribute("sectionName");
 				String deptId = (String)session.getAttribute("deptId");
@@ -83,7 +90,7 @@ public class DepartmentInsertResultServlet extends HttpServlet {
 				break;
 		}
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("department/departmentInsertResult.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("department/department_insert_result.jsp");
 		dispatcher.forward(request, response);
 	}
 
