@@ -38,8 +38,8 @@
 	<div class="errorMessage"><%=NullCheck.nullConvert(errorMessage1) %></div>
 	<div class="errorMessage"><%=NullCheck.nullConvert(errorMessage2) %></div>
 	<div class="errorMessage"><%=NullCheck.nullConvert(errorMessage3) %></div>
-	役職名<input type="text" name="positionName" value="<%=positionName%>"><br>
-	役職手当<input type="text" name="positionAllowance" value="<%=positionAllowance%>">円<br>
+	役職名　<input type="text" name="positionName" value="<%=positionName%>" style="width:80px;"><br>
+	役職手当<input type="text" name="positionAllowance" value="<%=positionAllowance%>" style="width:80px; ">円<br>
 	<input type="submit" value="変更">
 </form>
 

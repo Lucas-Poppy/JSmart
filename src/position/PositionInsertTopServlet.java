@@ -2,6 +2,7 @@ package position;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.PositionBean;
+import benefit.IntegerCheck;
 import benefit.NullCheck;
 import net.arnx.jsonic.JSON;
 
@@ -50,6 +52,7 @@ public class PositionInsertTopServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
+		NumberFormat nfNum = NumberFormat.getNumberInstance();
 
 		String ajaxFlag = request.getParameter("ajaxFlag");
 		String positionLank =NullCheck.nullConvert((String) session.getAttribute("textBoxPositionLank"));
@@ -79,8 +82,8 @@ public class PositionInsertTopServlet extends HttpServlet {
 				buttonHtml="<Button class='UP'>↑</Button><Button class='DOWN'>↓</Button>";
 			}
 			sb.append("<tr><td>"+positionBeanList.get(i).getPositionName()+"</td>");
-			sb.append("<td>"+positionBeanList.get(i).getPositionLank()+"</td>");
-			sb.append("<td>"+positionBeanList.get(i).getPositionAllowance()+"円</td>");
+			sb.append("<td Align='right'>"+positionBeanList.get(i).getPositionLank()+"</td>");
+			sb.append("<td Align='right'>"+nfNum.format(IntegerCheck.convertInteger(positionBeanList.get(i).getPositionAllowance()))+"円</td>");
 			sb.append("<td style='width:80px'>"+buttonHtml+"</td>");
 			sb.append("<td>"
 				+"<form action='PositionUpdateInputServlet' method='POST'>"

@@ -75,7 +75,7 @@ public class PositionKanri {
 /**
  *	入力された役職ランクよりも下にすでに役職がある場合に下の役職ランクを1つ繰り下げるメソッド
  *
- * @param positionLank　役職ランク
+ * @param positionLank 役職ランク
  * @throws SQLException
  */
 	public static void  positionDown(int positionLank) throws SQLException{
@@ -94,7 +94,7 @@ public class PositionKanri {
 
 	/**
 	 * ランクを入れ替えるメソッド
-	 * @param positionId　役職を一意に識別するID
+	 * @param positionId 役職を一意に識別するID
 	 * @param changeMethod 指定された役職の役職ランクを下げるか上げるかを判断する文字列 "UP"or"DOWM"
 	 * @throws SQLException
 	 */
@@ -137,12 +137,13 @@ public class PositionKanri {
 	}
 
 
-	/**
-	 *役職ランクから役職IDを取り出すメソッド
-	 *
-	 *
-	 */
 
+	/**
+	 * 役職ランクから役職IDを取り出すメソッド
+	 * @param positionLank 役職ランクを表す数値 低ければ上位
+	 * @return 役職を一意に識別するID
+	 * @throws SQLException
+	 */
 	public static int getPositionId(int positionLank) throws SQLException{
 		String getPositionIdSql = "select position_id from position where position_lank = ?";
 		Connection con = DBManager.getConnection();
@@ -162,9 +163,10 @@ public class PositionKanri {
 
 
 	/**
-	 *役職IDから役職ランクを取り出すメソッド
-	 *
-	 *
+	 * 役職IDから役職ランクを取り出すメソッド
+	 * @param positionId 役職を一意に識別するID
+	 * @return 役職ランクを表す数値 低ければ上位
+	 * @throws SQLException
 	 */
 
 	public static int getPositionLank(int positionId) throws SQLException{
@@ -185,9 +187,9 @@ public class PositionKanri {
 	}
 
 /**
+ * 登録されている役職の情報を全て返すメソッド
  *
- *
- * @return
+ * @return PositionBeanオブジェクト
  * @throws SQLException
  */
 	public List<PositionBean> getAllPosition() throws SQLException{
@@ -233,7 +235,14 @@ public class PositionKanri {
 	}
 
 
-
+	/**
+	 * 役職IDで指定された役職の登録情報を変更するメソッド
+	 *
+	 * @param positionName 新しく指定された役職の名前
+	 * @param positionAllowance 新しく指定された役職手当の金額
+	 * @param positionId 変更する役職を指定する一意に識別するID
+	 * @throws SQLException
+	 */
 
 	public static void positionUpdate(String positionName,int positionAllowance,int positionId) throws SQLException{
 		String positionUpdateSql = "update position set position_name=?,position_allowance=? where position_id=?";

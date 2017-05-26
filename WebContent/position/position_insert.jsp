@@ -34,11 +34,11 @@ SessionKanri.sessionRemoveAll(request);
 		<div class="errorMessage"><%=NullCheck.nullConvert(errorMessage1) %></div>
 		<div class="errorMessage"><%=NullCheck.nullConvert(errorMessage2) %></div>
 		<div class="errorMessage"><%=NullCheck.nullConvert(errorMessage3) %></div>
-			役職名<input type="text" name="positionName" value="<%=NullCheck.nullConvert(textBoxPositionName)%>"><br>
+			役職名　　<input type="text" name="positionName" value="<%=NullCheck.nullConvert(textBoxPositionName)%>" style="width:80px;"><br>
 			役職ランク<select name="positionLank">
 			<%=NullCheck.nullConvert(strPositionLankList)%>
-						</select>※上から何番目かを選択<br>
-			役職手当<input type="number" name="positionAllowance" value="<%=NullCheck.nullConvert(textBoxPositionAllowance)%>">円<br>
+						</select>　　　　※上から何番目かを選択<br>
+			役職手当　<input type="number" name="positionAllowance" value="<%=NullCheck.nullConvert(textBoxPositionAllowance)%>" style="width:80px; ">円<br>
 			<input type="submit" value="登録">
 	</form>
 	<table border="1">

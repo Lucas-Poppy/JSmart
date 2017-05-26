@@ -6,39 +6,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import beans.DepartmentBean;
-import beans.DepartmentSectionBean;
-
 import com.mysql.jdbc.PreparedStatement;
 
+import beans.DepartmentBean;
+import beans.DepartmentSectionBean;
 import dbconnect.DBManager;
 
 public class DepartmentSectionKanri {
-	/**
-	 *
-	 */
-	private String departmentSectionAllSql = "select dept_id,dept_name,section_id,section_name from department d left join department_section d_s using(dept_id) left join section s using(section_id) order by dept_id,section_id";
-
-	private String departmentAllSql = "select * from department order by dept_id";
-
-	private static String departmentMaxIdSql = "select count(*) +1 from department";
-
-	private static String departmentInsertSql = "insert into department (dept_id,dept_name) values(?,?)";
-
-	private static String deptNameExsistsSql = "select * from department where dept_name = ?";
-
-	private static String sectionNameExsistsSql = "select * from department_section  join section using(section_id) where section_name = ? and dept_id=?";
-
-
-	private static String sectionMaxIdSql = "select count(*) +1 from section";
-
-
-	private static String sectionInsertSql = "insert into section (section_id,section_name) values(?,?)";
-
-	private static String departmentSectionInsertSql = "insert into department_section (dept_id,section_id) values(?,?)";
-
-
-
 	/**
 	 * 登録されている部署と課の情報を全て返すメソッド
 	 *
@@ -46,6 +20,8 @@ public class DepartmentSectionKanri {
 	 * @throws SQLException
 	 */
 	public List<DepartmentSectionBean> allDeptSectionSearch() throws SQLException{
+		String departmentSectionAllSql = "select dept_id,dept_name,section_id,section_name from department d left join department_section d_s using(dept_id) left join section s using(section_id) order by dept_id,section_id";
+
 		Connection con=DBManager.getConnection();
 		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(departmentSectionAllSql) ;
 		ResultSet result = pstm.executeQuery();
@@ -69,6 +45,7 @@ public class DepartmentSectionKanri {
 	 */
 
 	public List<DepartmentBean> allDeptSearch() throws SQLException{
+		String departmentAllSql = "select * from department order by dept_id";
 		Connection con=DBManager.getConnection();
 		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(departmentAllSql) ;
 		ResultSet result = pstm.executeQuery();
@@ -91,6 +68,7 @@ public class DepartmentSectionKanri {
 	 * @throws SQLException
 	 */
 	public static int deptMaxId() throws SQLException{
+		String departmentMaxIdSql = "select count(*) +1 from department";
 		int maxId = 1;
 		Connection con=DBManager.getConnection();
 		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(departmentMaxIdSql);
@@ -117,6 +95,8 @@ public class DepartmentSectionKanri {
 
 
 	public static int deptInsert(String deptName) throws SQLException{
+		String departmentInsertSql = "insert into department (dept_id,dept_name) values(?,?)";
+
 		int maxId = deptMaxId();
 		Connection con=DBManager.getConnection();
 		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(departmentInsertSql);
@@ -139,6 +119,8 @@ public class DepartmentSectionKanri {
 	 */
 
 	public static boolean deptNameExsists(String deptName) throws SQLException{
+		String deptNameExsistsSql = "select * from department where dept_name = ?";
+
 		Connection con=DBManager.getConnection();
 		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(deptNameExsistsSql);
 		pstm.setString(1, deptName);
@@ -162,6 +144,8 @@ public class DepartmentSectionKanri {
 	 * @throws SQLException
 	 */
 	public static int sectionMaxId() throws SQLException{
+		String sectionMaxIdSql = "select count(*) +1 from section";
+
 		int maxId = 1;
 		Connection con=DBManager.getConnection();
 		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(sectionMaxIdSql);
@@ -189,6 +173,11 @@ public class DepartmentSectionKanri {
 
 
 	public static void sectionInsert(String sectionName,String deptId) throws SQLException{
+		String sectionInsertSql = "insert into section (section_id,section_name) values(?,?)";
+
+		String departmentSectionInsertSql = "insert into department_section (dept_id,section_id) values(?,?)";
+
+
 		int maxId = sectionMaxId();
 		Connection con=DBManager.getConnection();
 		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(sectionInsertSql);
@@ -217,6 +206,8 @@ public class DepartmentSectionKanri {
 	 */
 
 	public static boolean sectionNameExsists(String sectionName,String deptId) throws SQLException{
+		String sectionNameExsistsSql = "select * from department_section  join section using(section_id) where section_name = ? and dept_id=?";
+
 		Connection con=DBManager.getConnection();
 		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(sectionNameExsistsSql);
 		pstm.setString(1,sectionName);

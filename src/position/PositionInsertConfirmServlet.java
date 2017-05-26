@@ -69,7 +69,7 @@ public class PositionInsertConfirmServlet extends HttpServlet {
 		//入力チェック
 		if(!InputCheck.inputMaxTen(positionName)||exsists||!InputCheck.inputEmpty(positionName)
 				||!InputCheck.inputEmpty(positionAllowance)||!InputCheck.inputEmpty(positionLank)){
-
+			//エラーのときの処理
 
 			if(!InputCheck.inputMaxTen(positionName)){
 				session.setAttribute("errorInsertPositionName10Word", "10文字以上は入力できません！");
@@ -84,7 +84,7 @@ public class PositionInsertConfirmServlet extends HttpServlet {
 
 			url="PositionInsertTopServlet";
 		}else{
-
+			//正常な時の処理
 			request.setAttribute("confirm","役職名:"+positionName+"<br>役職ランク:"+positionLank+"番目<br>役職手当:"+positionAllowance+"円");
 		}
 
