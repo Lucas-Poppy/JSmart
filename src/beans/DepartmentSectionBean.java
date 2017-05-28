@@ -10,6 +10,7 @@ public class DepartmentSectionBean {
 	private String sectionId;
 	private String sectionName;
 
+
 	public DepartmentSectionBean(ResultSet res){
 		try{
 			deptId = res.getString(1);

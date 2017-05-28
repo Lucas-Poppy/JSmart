@@ -2,10 +2,19 @@ package session;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
+/**
+ * セッションを管理するクラス
+ *
+ * @author araki
+ *
+ */
 public class SessionKanri {
 
 
+	/**
+	 * セッションを全てRemoveするメソッド
+	 * @param request
+	 */
 	public static void sessionRemoveAll(HttpServletRequest request){
 
 		HttpSession session = request.getSession();
@@ -48,6 +57,10 @@ public class SessionKanri {
 
 	}
 
+	/**
+	 * エラーメッセージのセッションをRemoveするメソッド
+	 * @param request
+	 */
 	public static void sessionRemoveError(HttpServletRequest request){
 		HttpSession session = request.getSession();
 

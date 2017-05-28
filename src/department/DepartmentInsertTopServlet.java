@@ -70,7 +70,7 @@ public class DepartmentInsertTopServlet extends HttpServlet {
 		String ka = "課";
 		for (int i = 0; i < departmentSectionBeanList.size(); i++) {
 
-			if(departmentSectionBeanList.get(i).getSectionName()==null){
+			if(departmentSectionBeanList.get(i).getSectionName()==null||departmentSectionBeanList.get(i).getSectionName().equals("")){
 				ka="";
 			}else{
 				ka="課";

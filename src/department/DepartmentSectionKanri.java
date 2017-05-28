@@ -20,7 +20,9 @@ public class DepartmentSectionKanri {
 	 * @throws SQLException
 	 */
 	public List<DepartmentSectionBean> allDeptSectionSearch() throws SQLException{
-		String departmentSectionAllSql = "select dept_id,dept_name,section_id,section_name from department d left join department_section d_s using(dept_id) left join section s using(section_id) order by dept_id,section_id";
+
+		//select * from department_view where dept_id<>0 and (section_id<>0  or  dept_id in(select dept_id from department_view group by dept_id having count(*)<2));
+		String departmentSectionAllSql = "select * from department_view where dept_id<>0 and (section_id<>0  or  dept_id in(select dept_id from department_view group by dept_id having count(*)<2))";
 
 		Connection con=DBManager.getConnection();
 		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(departmentSectionAllSql) ;
@@ -94,7 +96,7 @@ public class DepartmentSectionKanri {
 	 */
 
 
-	public static int deptInsert(String deptName) throws SQLException{
+	public static void deptInsert(String deptName) throws SQLException{
 		String departmentInsertSql = "insert into department (dept_id,dept_name) values(?,?)";
 
 		int maxId = deptMaxId();
@@ -102,12 +104,20 @@ public class DepartmentSectionKanri {
 		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(departmentInsertSql);
 		pstm.setLong(1, maxId);
 		pstm.setString(2, deptName);
-		int insertNumber = pstm.executeUpdate();
+		pstm.executeUpdate();
+
+
+		String departmentSectionInsertSql = "insert into department_section values(?,0)";
+
+
+		PreparedStatement pstm2=(PreparedStatement) con.prepareStatement(departmentSectionInsertSql);
+		pstm.setLong(1, maxId);
+		pstm2.executeUpdate();
 
 		pstm.close();
+		pstm2.close();
 		con.close();
 
-		return insertNumber;
 	}
 
 	/**

@@ -2,11 +2,20 @@ package beans;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+/**
+ * 部署のBeanクラス
+ * @author Araki
+ *
+ */
 
 public class DepartmentBean {
 	private String deptId;
 	private String deptName;
 
+	/**
+	 * フィールドに値をセットしていくコンストラクタ
+	 * @param res
+	 */
 	public DepartmentBean(ResultSet res){
 		try{
 			deptId = res.getString(1);
