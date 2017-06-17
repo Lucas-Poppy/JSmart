@@ -44,6 +44,15 @@ public class SessionKanri {
 		session.removeAttribute("oldPosition");
 		session.removeAttribute("updateOldName");
 		session.removeAttribute("updateOldAllowance");
+		session.removeAttribute("strEmployeesBeanList");
+		session.removeAttribute("deptCheck");
+		session.removeAttribute("positionCheck");
+		session.removeAttribute("seniorityCheck");
+		session.removeAttribute("optionMenuPositionId");
+		session.removeAttribute("optionMenuDeptId");
+		session.removeAttribute("insertEmployee");
+		session.removeAttribute("");
+		session.removeAttribute("");
 		session.removeAttribute("");
 		session.removeAttribute("");
 		session.removeAttribute("");

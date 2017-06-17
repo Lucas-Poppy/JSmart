@@ -97,5 +97,100 @@ $(".DOWN").css('float','right');
     });
   }
 
+ $("#next").click(function(){
+ 	var page = parseInt($(':hidden[name="page"]').val());
+ 	console.log("next"+page);
+ 	page = page + 10;
+ 	$(':hidden[name="page"]').val(page);
+ 	console.log("next"+page);
+ 	$('#search_form').submit();
+ });
+
+  $("#prev").click(function(){
+ 	var page = parseInt($(':hidden[name="page"]').val());
+ 	console.log("prev"+page);
+ 	page = page - 10;
+ 	$(':hidden[name="page"]').val(page);
+ 	console.log("prev"+page);
+ 	$('#search_form').submit();
+ });
+
+  $("#search").click(function(){
+  	console.log("search");
+ 	$(':hidden[name="page"]').val(0);
+ 	$('#search_form').submit();
+ });
+
+ $(".change").click(function(){
+  	console.log('変更ボタン');
+ 	var $id=$(this).parent().parent().find('.empId').val();
+ 	console.log($id);
+ 	$('#search_form').attr('action', 'EmployeesUpdateServlet');
+ 	$("#emp_id").remove();
+ 	$("<input>", {
+		type: 'hidden',
+		id: 'emp_id',
+		name:'emp_id',
+		value: $id
+		}).appendTo('#search_form');
+ 	$('#search_form').submit();
+ });
+
+var mode = $("#mode").val();
+var deptVal = $("#dept option:selected").val();
+if(deptVal!=null&&mode=='insert'){
+	var dept = deptVal.split(",")
+	var deptId = dept[0];
+
+
+			$.ajax({
+			    	url: 'EmployeesSectionGetServlet',
+			    	type: 'POST',
+			    	dataType: 'json',
+			    	data: {
+			    			deptId:deptId,
+			    			},
+			    })
+			    .done(function(result) {
+					document.getElementById("section").innerHTML=result;
+			    })
+			    .fail(function() {
+			    })
+			    .always(function() {
+
+			    });
+
+}
+	
+
+
+
+$("#dept").change(function(){
+	console.log("課のチェンジ");
+	var deptVal = $("#dept option:selected").val();
+	var dept = deptVal.split(",")
+	var deptId = dept[0];
+
+
+			$.ajax({
+			    	url: 'EmployeesSectionGetServlet',
+			    	type: 'POST',
+			    	dataType: 'json',
+			    	data: {
+			    			deptId:deptId,
+			    			},
+			    })
+			    .done(function(result) {
+					document.getElementById("section").innerHTML=result;
+			    })
+			    .fail(function() {
+			    })
+			    .always(function() {
+
+			    });
+	});
+
+
+
 
 });

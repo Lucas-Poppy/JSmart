@@ -233,6 +233,32 @@ public class DepartmentSectionKanri {
 	}
 
 
+	/**
+	 * 登録されている部署と課の情報を全て返すメソッド
+	 *
+	 * @return DepartmentSectionBeanオブジェクト
+	 * @throws SQLException
+	 */
+	public List<DepartmentSectionBean> deptSectionSearch(String deptId) throws SQLException{
+
+		String departmentSectionSql = "select * from department_view where dept_id=?";
+
+		Connection con=DBManager.getConnection();
+		PreparedStatement pstm=(PreparedStatement) con.prepareStatement(departmentSectionSql);
+		pstm.setString(1, deptId);
+		ResultSet result = pstm.executeQuery();
+		List<DepartmentSectionBean> departmentSectionList = new ArrayList<DepartmentSectionBean>();
+		while(result.next()){
+			DepartmentSectionBean bean = new DepartmentSectionBean(result);
+			departmentSectionList.add(bean);
+			}
+		result.close();
+		pstm.close();
+		con.close();
+
+		return departmentSectionList;
+	}
+
 
 
 

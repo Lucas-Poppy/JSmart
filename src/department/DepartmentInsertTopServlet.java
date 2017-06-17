@@ -1,7 +1,6 @@
 package department;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.DepartmentBean;
 import beans.DepartmentSectionBean;
 import benefit.NullCheck;
+import common.OptionMenuCreate;
 
 /**
  * 部署課登録の画面を生成するサーブレットクラス
@@ -88,27 +87,7 @@ public class DepartmentInsertTopServlet extends HttpServlet {
 		/**
 		 * 部のoptionメニューを作成
 		 */
-
-		List<DepartmentBean> departmentBeanList = new ArrayList<DepartmentBean>();
-		try {
-			departmentBeanList = dsKanri.allDeptSearch();
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-
-		StringBuilder sb2 = new StringBuilder(300);
-		String selected;
-		for (int i = 0; i < departmentBeanList.size(); i++) {
-			if(deptId.equals(departmentBeanList.get(i).getDeptId())){
-				selected="selected";
-			}else{
-				selected="";
-			}
-			sb2.append("<option value='" + departmentBeanList.get(i).getDeptId()+","+departmentBeanList.get(i).getDeptName()+ "'"+selected+">");
-			sb2.append(departmentBeanList.get(i).getDeptName() + "</option>");
-		}
-		String strDepartmentBeanList = sb2.toString();
+		String strDepartmentBeanList = OptionMenuCreate.deptOptionMenuCreate(deptId);
 		/**
 		 * 部のoptionメニューを作成の終了
 		 */
