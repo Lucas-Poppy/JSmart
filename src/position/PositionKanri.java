@@ -70,8 +70,9 @@ public class PositionKanri {
 
 		pstm.close();
 		con.close();
-
 	}
+
+
 /**
  *	入力された役職ランクよりも下にすでに役職がある場合に下の役職ランクを1つ繰り下げるメソッド
  *
