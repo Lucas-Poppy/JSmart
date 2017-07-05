@@ -30,7 +30,8 @@ if(pageNum==null){
 }
 SessionKanri.sessionRemoveAll(request);
 %>
-
+<a href="index.jsp">TOPに戻る</a>
+<a href="employees/employees_top.jsp">社員管理画面に戻る</a>
  <form id="search_form" action="EmployeesSearchServlet" method="POST">
  	<input type="checkbox" name="searchConditions" value="dept" <%=NullCheck.nullConvert(deptCheked) %>>
  	部署

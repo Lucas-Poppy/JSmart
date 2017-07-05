@@ -24,7 +24,8 @@ String insertInfo =(String) session.getAttribute("insertEmployee");
 SessionKanri.sessionRemoveAll(request);
 %>
 <body>
-
+<a href="index.jsp">TOPに戻る</a>
+<a href="employees/employees_top.jsp">社員管理画面に戻る</a>
  	<form action="EmployeesInsertServlet" method="POST">
  	<input type="hidden" id="mode" value="insert" >
 

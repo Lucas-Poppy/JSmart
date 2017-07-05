@@ -69,6 +69,11 @@ public class LicenseKanri {
 		con.close();
 	}
 
+	/**
+	 * 資格情報をすべて取得するメソッド
+	 * @return LicenseBeanオブジェクトのリスト
+	 * @throws SQLException
+	 */
 	public List<LicenseBean> getLicenseAll() throws SQLException{
 		String sql = "SELECT license_id,license_name,license_lank FROM license order by 3,1";
 		Connection con=DBManager.getConnection();
@@ -84,6 +89,34 @@ public class LicenseKanri {
 		con.close();
 
 		return licenseList;
+	}
+
+
+	public String getLicenseAllString() throws SQLException{
+		List<LicenseBean> licenseBeanList = new ArrayList<LicenseBean>();
+		licenseBeanList = this.getLicenseAll();
+		StringBuilder sb = new StringBuilder(300);
+
+		for (int i = 0; i < licenseBeanList.size(); i++) {
+			sb.append("<tr><td>"+licenseBeanList.get(i).getLicenseName()+"</td>");
+			sb.append("<td style='width:85px;' class='textbox' Align='right' data-id='"+licenseBeanList.get(i).getLicenseId()+"'>"+licenseBeanList.get(i).getLicenseLank()+"</td>");
+			sb.append("</tr>");
+		}
+
+		String licenseList = sb.toString();
+		return licenseList;
+	}
+
+	public static void licenseLankUpdate(String licenseId,String licenseLank)throws SQLException{
+		String sql = "update license set license_lank=? where license_id=?";
+		Connection con = DBManager.getConnection();
+		PreparedStatement pstm = (PreparedStatement) con.prepareStatement(sql);
+		pstm.setString(1,licenseLank);
+		pstm.setString(2,licenseId);
+		pstm.executeUpdate();
+
+		pstm.close();
+		con.close();
 	}
 
 

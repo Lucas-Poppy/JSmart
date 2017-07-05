@@ -16,6 +16,7 @@ SessionKanri.sessionRemoveAll(request);
 
 %>
 	<a href="PositionInsertTopServlet">役職登録・変更</a><br>
-	<a href="DepartmentInsertTopServlet">部署・課 登録</a>
+	<a href="DepartmentInsertTopServlet">部署・課 登録</a><br>
+	<a href="employees/employees_top.jsp">社員検索</a>
 </body>
 </html>

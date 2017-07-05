@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <title>Insert title here</title>
 </head>
 <%
@@ -33,4 +34,65 @@ String licenseList = (String) session.getAttribute("licenseList");
 	</table>
 
 </body>
+	<script type="text/javascript">
+	function enter(){
+		if(window.event.keyCode==13){
+			var licenseLank=$('#licenseLankInput').val();
+			var licenseId=$('#licenseLankInput').parent().data('id');
+			console.log("資格ランク"+licenseLank);
+			console.log("資格ID"+licenseId);
+			$.ajax({
+		    	url: 'LicenseUpdateServlet',
+		    	type: 'POST',
+		    	dataType: 'json',
+		    	data: {
+		    			licenseId:licenseId,
+		    			licenseLank:licenseLank,
+		    			method:'UP',
+		    			},
+		    })
+		    .done(function() {
+
+		    })
+		    .fail(function() {
+		    	console.log("error");
+		    })
+		    .always(function(result) {
+		    	console.log("complete");
+		    	document.getElementById("licenseList").innerHTML=result;
+		    	$("#licenseLankInput").focus()
+		    });
+		}
+	}
+
+	$("#licenseList").on("blur","#licenseLankInput",function(){
+		var licenseLank=$('#licenseLankInput').val();
+		var licenseId=$('#licenseLankInput').parent().data('id');
+		console.log("資格ランク"+licenseLank);
+		console.log("資格ID"+licenseId);
+		$.ajax({
+	    	url: 'LicenseUpdateServlet',
+	    	type: 'POST',
+	    	dataType: 'json',
+	    	data: {
+	    			licenseId:licenseId,
+	    			licenseLank:licenseLank,
+	    			method:'UP',
+	    			},
+	    })
+	    .done(function() {
+
+	    })
+	    .fail(function() {
+	    	console.log("error");
+	    })
+	    .always(function(result) {
+	    	console.log("complete");
+	    	document.getElementById("licenseList").innerHTML=result;
+	    	$("#licenseLankInput").focus()
+	    });
+	});
+
+	</script>
+    <script type="text/javascript" src="js/license.js"></script>
 </html>
