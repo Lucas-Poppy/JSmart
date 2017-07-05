@@ -47,6 +47,7 @@ public class EmployeesUpdateServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
+		OptionMenuCreate optionMenuCreate = new OptionMenuCreate();
 		String empId = request.getParameter("emp_id");
 		System.out.println("empId="+empId);
 
@@ -107,7 +108,7 @@ public class EmployeesUpdateServlet extends HttpServlet {
 			/**
 			 * 部署のoptionメニューを作成
 			 */
-			String strDepartmentBeanList = OptionMenuCreate.deptOptionMenuCreate(deptId);
+			String strDepartmentBeanList = optionMenuCreate.deptOptionMenuCreate(deptId);
 			session.setAttribute("strDepartmentBeanList", strDepartmentBeanList);
 			/**
 			 * 部署のoptionメニューを作成の終了
@@ -116,7 +117,7 @@ public class EmployeesUpdateServlet extends HttpServlet {
 			/**
 			 * 課のoptionメニューを作成
 			 */
-			String sectionOptionMenu = OptionMenuCreate.sectionOptionMenuCreate(deptId,sectionId);
+			String sectionOptionMenu = optionMenuCreate.sectionOptionMenuCreate(deptId,sectionId);
 			session.setAttribute("sectionOptionMenu", sectionOptionMenu);
 			/**
 			 * 課のoptionメニューを作成の終了
@@ -127,7 +128,7 @@ public class EmployeesUpdateServlet extends HttpServlet {
 			/**
 			 *役職のoptionメニューを作成
 			 */
-			String strPositionBeanList = OptionMenuCreate.positionOptionMenuCreate(positionId);
+			String strPositionBeanList = optionMenuCreate.positionOptionMenuCreate(positionId);
 			session.setAttribute("strPositionBeanList", strPositionBeanList);
 			/**
 			 *役職のoptionメニューを作成の終了

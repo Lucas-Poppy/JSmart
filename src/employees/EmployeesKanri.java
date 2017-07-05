@@ -109,14 +109,19 @@ public class EmployeesKanri {
 	 * @throws SQLException
 	 */
 
+	//mod Araki Yuki 17/06/30 begin
+//	public static void insertEmployees(String nameKanzi, String nameKana, String birth, String sex,
+//			String addressNumber, String address, String phoneNumber, String deptId, String sectionId,
+//			String positionId, String dateOfEntering) throws SQLException {
 	public static void insertEmployees(String nameKanzi, String nameKana, String birth, String sex,
-			String addressNumber, String address, String phoneNumber, String deptId, String sectionId,
-			String positionId, String dateOfEntering) throws SQLException {
+	String addressNumber, String address, String phoneNumber, String deptId, String sectionId,
+	String positionId, String dateOfEntering,String licenseId) throws SQLException {
+
 		String insertSql = "insert into employees(emp_name_kanzi,emp_name_kana,emp_birth,emp_sex,"
 				+ "emp_address_number,emp_address,emp_phone_number,dept_id,section_id,position_id,"
 				+ "date_of_entering) " + " values(?,?,?,?,?,?,?,?,?,?,?)";
 		Connection con = DBManager.getConnection();
-		PreparedStatement pstm = (PreparedStatement) con.prepareStatement(insertSql);
+		PreparedStatement pstm = (PreparedStatement) con.prepareStatement(insertSql,java.sql.Statement.RETURN_GENERATED_KEYS);
 		pstm.setString(1, nameKanzi);
 		pstm.setString(2, nameKana);
 		pstm.setString(3, birth);
@@ -128,16 +133,40 @@ public class EmployeesKanri {
 		pstm.setString(9, sectionId);
 		pstm.setString(10, positionId);
 		pstm.setString(11, dateOfEntering);
-		pstm.executeUpdate();
+		int resultNumber = pstm.executeUpdate();
 
+		if(resultNumber==1){
+			//オートインクリメントのIDを取得
+			ResultSet rs = pstm.getGeneratedKeys();
+			int primaryKey = 0;
+			if(rs.next()){
+				primaryKey = rs.getInt(1);
+			}
+			insertEmployeeLicense(primaryKey,licenseId);
+		}
+
+		pstm.close();
+		con.close();
+	//mod Araki Yuki 17/06/30 end
+	}
+
+
+	//add Araki Yuki 17/06/30 begin
+	public static void insertEmployeeLicense(int empId,String licenseId)throws SQLException {
+		String sql = "insert into employees_license(emp_id,license_id) values(?,?)";
+		Connection con = DBManager.getConnection();
+		PreparedStatement pstm = (PreparedStatement) con.prepareStatement(sql);
+		pstm.setInt(1, empId);
+		pstm.setString(2, licenseId);
+		pstm.executeUpdate();
 		pstm.close();
 		con.close();
 
 	}
+	//add Araki Yuki 17/06/30 end
 
 	/**
 	 * 社員情報の変更をするメソッド
-	 *
 	 * @param empId
 	 * @param nameKanzi
 	 * @param nameKana

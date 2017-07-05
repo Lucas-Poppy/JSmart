@@ -1,8 +1,9 @@
-package employees;
+package license;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,20 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import common.OptionMenuCreate;
-import net.arnx.jsonic.JSON;
-
 /**
- * Servlet implementation class EmployeesSectionGetServlet
+ * Servlet implementation class LicenseInsertServlet
  */
-@WebServlet("/EmployeesSectionGetServlet")
-public class EmployeesSectionGetServlet extends HttpServlet {
+@WebServlet("/LicenseInsertServlet")
+public class LicenseInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EmployeesSectionGetServlet() {
+    public LicenseInsertServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,18 +38,20 @@ public class EmployeesSectionGetServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
+		String licenseName = request.getParameter("licenseName");
+		String licenseLank = request.getParameter("licenseLank");
 
-		String deptId = request.getParameter("deptId");
-		OptionMenuCreate optionMenuCreate = new OptionMenuCreate();
-		String sectionOptionMenu = optionMenuCreate.sectionOptionMenuCreate(deptId);
+		try {
+			LicenseKanri.licenseInsert(licenseName, licenseLank);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 
-		response.setContentType("text/html; charset=utf-8");
-		System.out.println("ajax使用");
-		PrintWriter out = response.getWriter();
-	    out.println(JSON.encode(sectionOptionMenu));
+		RequestDispatcher dispatcher = request.getRequestDispatcher("LicenseInsertTopServlet");
+		dispatcher.forward(request, response);
 	}
 
 }

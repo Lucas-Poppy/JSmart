@@ -18,6 +18,7 @@ request.setCharacterEncoding("UTF-8");
 
 String optionDepartmentBeanList =(String) session.getAttribute("strDepartmentBeanList");
 String optionPositionBeanList = (String) session.getAttribute("strPositionBeanList");
+String optionLicenseBeanList = (String) session.getAttribute("strLicenseBeanList");
 
 String insertInfo =(String) session.getAttribute("insertEmployee");
 SessionKanri.sessionRemoveAll(request);
@@ -45,6 +46,10 @@ SessionKanri.sessionRemoveAll(request);
  		役職
  		<select name="position">
  			<%= NullCheck.nullConvert(optionPositionBeanList) %>
+ 		</select><br>
+ 		資格
+ 		<select name="license">
+ 			<%= NullCheck.nullConvert(optionLicenseBeanList) %>
  		</select><br>
  		性別<input type="radio" name ="sex" value="男" checked >男<input type="radio" name="sex" value="女">女<br>
 		生年月日<input type="date" name="birth"><br>

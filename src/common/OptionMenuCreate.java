@@ -6,8 +6,10 @@ import java.util.List;
 
 import beans.DepartmentBean;
 import beans.DepartmentSectionBean;
+import beans.LicenseBean;
 import beans.PositionBean;
 import department.DepartmentSectionKanri;
+import license.LicenseKanri;
 import position.PositionKanri;
 
 /**
@@ -25,7 +27,7 @@ public class OptionMenuCreate {
 	 * @param deptId チェックされているdeptIdを受け取る
 	 * @return
 	 */
-	public static String deptOptionMenuCreate(String deptId){
+	public String deptOptionMenuCreate(String deptId){
 
 		List<DepartmentBean> departmentBeanList = new ArrayList<DepartmentBean>();
 		DepartmentSectionKanri dsKanri = new DepartmentSectionKanri();
@@ -60,7 +62,7 @@ public class OptionMenuCreate {
 	 */
 
 
-	public static String positionOptionMenuCreate(String positionId){
+	public String positionOptionMenuCreate(String positionId){
 
 		List<PositionBean> positionBeanList = new ArrayList<PositionBean>();
 		PositionKanri psKanri = new PositionKanri();
@@ -94,7 +96,7 @@ public class OptionMenuCreate {
 	 * @return
 	 */
 
-	public static String sectionOptionMenuCreate(String deptId){
+	public String sectionOptionMenuCreate(String deptId){
 		List<DepartmentSectionBean> list = new ArrayList<DepartmentSectionBean>();
 		DepartmentSectionKanri dsKanri = new DepartmentSectionKanri();
 		try {
@@ -126,7 +128,7 @@ public class OptionMenuCreate {
 	 * @return
 	 */
 
-	public static String sectionOptionMenuCreate(String deptId,String sectionId){
+	public String sectionOptionMenuCreate(String deptId,String sectionId){
 		List<DepartmentSectionBean> list = new ArrayList<DepartmentSectionBean>();
 		DepartmentSectionKanri dsKanri = new DepartmentSectionKanri();
 		try {
@@ -160,6 +162,34 @@ public class OptionMenuCreate {
 		return sb2.toString();
 	}
 
+
+	public String licenseOptionMenuCreate(String licenseId){
+
+		List<LicenseBean> list = new ArrayList<LicenseBean>();
+		LicenseKanri licensekanri = new LicenseKanri();
+
+		try {
+			list = licensekanri.getLicenseAll();
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		StringBuilder sb2 = new StringBuilder(300);
+
+		for (int i = 0; i < list.size(); i++) {
+			String selected;
+			if(licenseId.equals(list.get(i).getLicenseId())){
+				selected="selected";
+			}else{
+				selected="";
+			}
+
+			sb2.append("<option value='" + list.get(i).getLicenseId()+","+list.get(i).getLicenseName()+ "' "+selected+">");
+			sb2.append(list.get(i).getLicenseName() + "</option>");
+		}
+
+		return sb2.toString();
+	}
 
 
 

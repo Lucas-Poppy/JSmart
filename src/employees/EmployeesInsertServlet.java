@@ -62,6 +62,11 @@ public class EmployeesInsertServlet extends HttpServlet {
 		String positionId = position[0];
 		String positionName = position[1];
 
+		//add Araki Yuki 17/06/30 begin
+		String license[] = request.getParameter("license").split("[,]", 0);
+		String licenseId = license[0];
+		String licenseName = license[1];
+		//add Araki Yuki 17/06/30 end
 
 		String sex = request.getParameter("sex");
 		String birth = request.getParameter("birth");
@@ -80,7 +85,10 @@ public class EmployeesInsertServlet extends HttpServlet {
 
 
 		try {
-			EmployeesKanri.insertEmployees(nameKanzi, nameKana, birth, sex, addressNumber, address, phoneNumber, deptId, sectionId, positionId, dateOfEnteringDate);
+			//mod Araki Yuki 17/06/30 begin
+			//EmployeesKanri.insertEmployees(nameKanzi, nameKana, birth, sex, addressNumber, address, phoneNumber, deptId, sectionId, positionId, dateOfEnteringDate);
+			EmployeesKanri.insertEmployees(nameKanzi, nameKana, birth, sex, addressNumber, address, phoneNumber, deptId, sectionId, positionId, dateOfEnteringDate,licenseId);
+			//mod Araki Yuki 17/06/30 end
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -91,6 +99,9 @@ public class EmployeesInsertServlet extends HttpServlet {
 		sb.append("部署名："+deptName+"<br>");
 		sb.append("課名："+sectionName+"<br>");
 		sb.append("役職名："+positionName+"<br>");
+		//add Araki Yuki 17/06/30 begin
+		sb.append("資格："+licenseName+"<br>");
+		//add Araki Yuki 17/06/30 end
 		sb.append("生年月日："+birth+"<br>");
 		sb.append("性別："+sex+"<br>");
 		sb.append("〒："+addressNumber+"<br>");

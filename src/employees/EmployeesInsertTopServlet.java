@@ -44,13 +44,17 @@ public class EmployeesInsertTopServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
+		OptionMenuCreate optionMenuCreate = new OptionMenuCreate();
 
 		String deptId =NullCheck.nullConvert((String) session.getAttribute("optionMenuDeptId"));
 		String positionId =NullCheck.nullConvert((String) session.getAttribute("optionMenuPositionId"));
+		//add Araki Yuki 17/06/30 begin
+		String licenseId =NullCheck.nullConvert((String) session.getAttribute("optionMenuLicenseId"));
+		//add Araki Yuki 17/06/30 end
 		/**
 		 * 部署のoptionメニューを作成
 		 */
-		String strDepartmentBeanList = OptionMenuCreate.deptOptionMenuCreate(deptId);
+		String strDepartmentBeanList = optionMenuCreate.deptOptionMenuCreate(deptId);
 		session.setAttribute("strDepartmentBeanList", strDepartmentBeanList);
 		/**
 		 * 部署のoptionメニューを作成の終了
@@ -59,12 +63,22 @@ public class EmployeesInsertTopServlet extends HttpServlet {
 		/**
 		 *役職のoptionメニューを作成
 		 */
-		String strPositionBeanList = OptionMenuCreate.positionOptionMenuCreate(positionId);
+		String strPositionBeanList = optionMenuCreate.positionOptionMenuCreate(positionId);
 		session.setAttribute("strPositionBeanList", strPositionBeanList);
 		/**
 		 *役職のoptionメニューを作成の終了
 		 */
 
+		//add Araki Yuki 17/06/30 begin
+		/**
+		 * 資格のoptionメニューの作成
+		 */
+		String strLicenseBeanList = optionMenuCreate.licenseOptionMenuCreate(positionId);
+		session.setAttribute("strLicenseBeanList", strLicenseBeanList);
+		/**
+		 * 資格のoptionメニューを作成の終了
+		 */
+		//add Araki Yuki 17/06/30 end
 		RequestDispatcher dispatcher = request.getRequestDispatcher("employees/employees_insert.jsp");
 		dispatcher.forward(request, response);
 

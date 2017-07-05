@@ -46,10 +46,11 @@ public class EmployeesSearchTopServlet extends HttpServlet {
 
 		String deptId =NullCheck.nullConvert((String) session.getAttribute("optionMenuDeptId"));
 		String positionId =NullCheck.nullConvert((String) session.getAttribute("optionMenuPositionId"));
+		OptionMenuCreate optionMenuCreate = new OptionMenuCreate();
 		/**
 		 * 部署のoptionメニューを作成
 		 */
-		String strDepartmentBeanList = OptionMenuCreate.deptOptionMenuCreate(deptId);
+		String strDepartmentBeanList = optionMenuCreate.deptOptionMenuCreate(deptId);
 		session.setAttribute("strDepartmentBeanList", strDepartmentBeanList);
 		/**
 		 * 部署のoptionメニューを作成の終了
@@ -58,7 +59,7 @@ public class EmployeesSearchTopServlet extends HttpServlet {
 		/**
 		 *役職のoptionメニューを作成
 		 */
-		String strPositionBeanList = OptionMenuCreate.positionOptionMenuCreate(positionId);
+		String strPositionBeanList = optionMenuCreate.positionOptionMenuCreate(positionId);
 		session.setAttribute("strPositionBeanList", strPositionBeanList);
 		/**
 		 *役職のoptionメニューを作成の終了

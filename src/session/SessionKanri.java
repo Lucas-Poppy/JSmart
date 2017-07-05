@@ -51,7 +51,7 @@ public class SessionKanri {
 		session.removeAttribute("optionMenuPositionId");
 		session.removeAttribute("optionMenuDeptId");
 		session.removeAttribute("insertEmployee");
-		session.removeAttribute("");
+		session.removeAttribute("licenseList");
 		session.removeAttribute("");
 		session.removeAttribute("");
 		session.removeAttribute("");

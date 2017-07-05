@@ -53,6 +53,8 @@ public class DepartmentInsertTopServlet extends HttpServlet {
 
 		String deptId =NullCheck.nullConvert((String) session.getAttribute("optionMenuDeptId"));
 
+		OptionMenuCreate optionMenuCreate = new OptionMenuCreate();
+
 		/**
 		 * 部署と課の一覧の作成
 		 */
@@ -87,7 +89,7 @@ public class DepartmentInsertTopServlet extends HttpServlet {
 		/**
 		 * 部のoptionメニューを作成
 		 */
-		String strDepartmentBeanList = OptionMenuCreate.deptOptionMenuCreate(deptId);
+		String strDepartmentBeanList = optionMenuCreate.deptOptionMenuCreate(deptId);
 		/**
 		 * 部のoptionメニューを作成の終了
 		 */
