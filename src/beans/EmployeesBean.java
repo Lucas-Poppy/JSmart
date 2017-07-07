@@ -27,6 +27,10 @@ public class EmployeesBean {
 	private String deptName;
 	private String sectionName;
 	private String positionName;
+	private String licenseName;
+
+
+
 
 	/**
 	 * データを格納するコンストラクタ
@@ -52,6 +56,7 @@ public class EmployeesBean {
 			deptName = res.getString(14);
 			sectionName = res.getString(15);
 			positionName = res.getString(16);
+			licenseName = res.getString(17);
 
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
@@ -377,4 +382,21 @@ public class EmployeesBean {
 		this.empAddressNumber = empAddressNumber;
 	}
 
+	/**
+	 * licenseNameを取得します
+	 * @return licenseName
+	 */
+
+	public String getLicenseName() {
+		return licenseName;
+	}
+
+	/**
+	 * licenseNameを設定します
+	 * @param licenseName 資格名
+	 */
+
+	public void setLicenseName(String licenseName) {
+		this.licenseName = licenseName;
+	}
 }

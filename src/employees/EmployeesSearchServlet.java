@@ -19,6 +19,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import beans.EmployeesBean;
 import benefit.IntegerCheck;
+import benefit.NullCheck;
 
 /**
  * Servlet implementation class EmployeesSearchServlet
@@ -177,6 +178,9 @@ public class EmployeesSearchServlet extends HttpServlet {
 			sb.append("<td>" + emBeanList.get(i).getEmpPhoneNumber() + "</td>");
 			sb.append("<td>" + dateOfEntering + "</td>");
 			sb.append("<td>" + dateOfRetire + "</td>");
+			//add Araki Yuki 17/07/07 begin
+			sb.append("<td>" + NullCheck.nullConvert(emBeanList.get(i).getLicenseName()) + "</td>");
+			//add Araki Yuki 17/07/07 end
 			sb.append("<td><Button type='button' class='change'>変更</Button></td>");
 			sb.append("</tr>");
 		}

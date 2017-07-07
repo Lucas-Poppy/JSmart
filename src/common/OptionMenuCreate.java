@@ -162,7 +162,11 @@ public class OptionMenuCreate {
 		return sb2.toString();
 	}
 
-
+/**
+ * 資格情報のoptionメニューを作成するメソッド
+ * @param licenseId　資格を一意に識別するID
+ * @return
+ */
 	public String licenseOptionMenuCreate(String licenseId){
 
 		List<LicenseBean> list = new ArrayList<LicenseBean>();

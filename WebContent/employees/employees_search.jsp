@@ -70,6 +70,7 @@ SessionKanri.sessionRemoveAll(request);
  		<th>電話番号</th>
  		<th>入社日</th>
  		<th>退社日</th>
+ 		<th>資格</th>
  		<th>変更</th>
  	</tr>
  	<%=NullCheck.nullConvert(employeesTableList) %>
